@@ -2,21 +2,32 @@ console.log('build start');
 const sharp = require('sharp');
 const fs = require('fs');
 
-Array(47).fill().forEach((_, idx) => {
-  const url = `./좋았쓰콘/image-${idx}.jpg`;
-  const tourl =`./좋았쓰콘/images/image-${idx}-resize.jpg` ;
-  /*
+const d = "좋았쓰콘2";
+
+const filePath = `./${d}`;
+let cnt = 0;
+fs.readdirSync(filePath).forEach(file => {
+  console.log(file);
+  if(file.includes('.jpg')) {
+    cnt++;
+  }
+});
+
+console.log(cnt);
+
+Array(cnt).fill().forEach((_, idx) => {
+  const url = `./${d}/image-${idx}.jpg`;
+  const tourl =`./${d}/images/image-${idx}-resize.jpg` ;
+
   sharp(url)
     .resize(800, 400, {
       fit: 'contain',
       background: {r:255, g:255, b:255}
     })
     .toFile(tourl, (err, info) => {console.log(err, info)});
-  */
   
   const html = 
-  `
-<!DOCTYPE html>
+  `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -35,7 +46,7 @@ Array(47).fill().forEach((_, idx) => {
   `;
 
   console.log(html);
-  const filename = `./좋았쓰콘/idx-${idx}.html`;
+  const filename = `./${d}/idx-${idx}.html`;
 
   fs.writeFile(filename, html, (err) => {
       if (err) {
