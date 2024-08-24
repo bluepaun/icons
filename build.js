@@ -2,7 +2,7 @@ console.log('build start');
 const sharp = require('sharp');
 const fs = require('fs');
 
-const d = "희귀페페콘";
+const d = "슬픈고양이";
 
 const filePath = `./${d}`;
 let cnt = 0;
