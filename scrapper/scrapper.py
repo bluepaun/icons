@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from os import listdir, remove
+from os.path import isfile, join
 
 def icons():
-  url = "https://www.dogdrip.net/sticker?sort_index=popular_week&sticker_srl=560949999"
+  url = "https://www.dogdrip.net/sticker?sort_index=popular_week&sticker_srl=574743853"
   print(f"Scrapping... : {url}")
   res = requests.get(url,
                     headers={
@@ -43,6 +45,13 @@ def icons():
 
 
 if __name__ == "__main__":
+  path = './'
+  onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
+  print(onlyfiles)
+  for filename in onlyfiles:
+     if 'jpg' in filename:
+      remove(join(path, filename))
+
   icons()
 
 
