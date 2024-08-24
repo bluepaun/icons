@@ -21,12 +21,15 @@ Array(47).fill().forEach((_, idx) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
-
+  <title>-</title>
   <meta property="og:type" content="website">
   <meta property="og:image" content="${tourl.replace(/^.*\/images/, 'images')}">
 </head>
 <body>
+  <script>
+    const l = location.protocol + "//" + location.host + location.pathname + "/..";
+    window.location.replace(l);
+  </script>
 </body>
 </html>
   `;
