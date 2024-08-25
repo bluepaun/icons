@@ -34,15 +34,12 @@ Array(cnt).fill().forEach((_, idx) => {
         const clipboardItems = [
           new ClipboardItem( {
             "image/png":blob
-          }),
-          new ClipboardItem({
-            "text/plain": new Blob([s], { type: "text/plain" })
           })
         ];
         navigator.clipboard.write(clipboardItems)
           .then(() => console.log('copy success'))
           .catch(err => {
-              //navigator.clipboard.writeText(s)
+              navigator.clipboard.writeText(s)
               console.log (err);
               let alert = document.getElementById('alert');
               if (!alert) {
