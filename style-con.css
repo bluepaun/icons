@@ -1,0 +1,9 @@
+a{
+  color: white;
+  text-align: center;
+}
+main div {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}

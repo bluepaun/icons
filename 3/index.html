@@ -1,59 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="images/image-0-resize.jpg">
-  <title>슬픈고양이콘</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-    body,html {
-      margin:0;
-      background-color: #023047;
-      font-family: "Noto Sans KR", sans-serif;
-      font-optical-sizing: auto;
-      font-style: normal;
-    }
-    header, a{
-      color: white;
-      text-align: center;
-    }
-    main {
-      display: flex;
-      flex-wrap: wrap;
-      gap:1em;
-      justify-content: center;
-      padding-top: 1em;
-    }
-    main div {
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>슬픈고양이콘</h1>
-    <a href="..">Home</a>
-  </header>
-  <main>
-  </main>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/image-0-resize.jpg">
+    <title>슬픈고양이콘</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style-con.css">
+    <script type="module" src="../app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>슬픈고양이콘</h1>
+      <a href="..">Home</a>
+    </header>
+    <main>
+    </main>
+  </body>
+  </html>
   
-  <script>
-    const main = document.getElementsByTagName('main')[0];
-    Array(50).fill().forEach((_, idx) => {
-      const div = document.createElement('div');
-      div.style = `background: url("image-${idx}.jpg") no-repeat center; background-size: cover`;
-      div.setAttribute('data-link', `${location.protocol}//${location.host}${location.pathname}idx-${idx}`);
-      div.addEventListener('click', (e) => {
-        const t = e.target;
-        const l = t.getAttribute('data-link');
-        navigator.clipboard.writeText(l)
-      })
-      main.appendChild(div);
-    });
-  </script>
-</body>
-</html>
