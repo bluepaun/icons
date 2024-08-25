@@ -2,7 +2,8 @@ console.log('build start');
 const sharp = require('sharp');
 const fs = require('fs');
 
-const d = "아로나콘";
+const d = '9';
+const icon_name = '페페콘';
 
 const filePath = `./${d}`;
 let cnt = 0;
@@ -69,7 +70,7 @@ const indexhtml = `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/image-0-resize.jpg">
-  <title>${d}</title>
+  <title>${icon_name}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
     body,html {
@@ -99,7 +100,7 @@ const indexhtml = `<!DOCTYPE html>
 </head>
 <body>
   <header>
-    <h1>${d}</h1>
+    <h1>${icon_name}</h1>
     <a href="..">Home</a>
   </header>
   <main>
@@ -142,8 +143,12 @@ if (!data.match(new RegExp(`"${d}"`))) {
     }
   </style>`);
 
-  data = data.replace(/ +\<\/main\>/, `    <a href="${d}"></a>
-  </main>`);
+  data = data.replace(/ +\<\/main\>/, `    <div>
+      <a href="${d}"></a>
+      <h5>${icon_name}</h5>
+    </div>
+  </main>
+`);
 
   //console.log(data);
   
