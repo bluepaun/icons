@@ -2,8 +2,8 @@ console.log('build start');
 const sharp = require('sharp');
 const fs = require('fs');
 
-const d = '11';
-const icon_name = '켈시콘';
+const d = '14';
+const icon_name = '혁명콘';
 
 const filePath = `./${d}`;
 let cnt = 0;

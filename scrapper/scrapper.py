@@ -5,7 +5,7 @@ from os import listdir, remove
 from os.path import isfile, join
 
 def icons():
-  url = "https://www.dogdrip.net/sticker?search_target=tag&search_keyword=%EB%AA%85%EC%9D%BC%EB%B0%A9%EC%A3%BC&sticker_srl=354009886"
+  url = "https://www.dogdrip.net/sticker?sort_index=popular&page=5&sticker_srl=265649522"
   print(f"Scrapping... : {url}")
   res = requests.get(url,
                     headers={
