@@ -1,4 +1,5 @@
 console.log('build start');
+const sharp = require('sharp');
 const fs = require('fs');
 
 const list = [
@@ -20,8 +21,7 @@ const list = [
 const start = 0;
 const end = list.length;
 
-
-const makeConIndex = (d, icon_name) => {
+const countItems = (d) => {
   const filePath = `./${d}`;
   let cnt = 0;
   fs.readdirSync(filePath).forEach(file => {
@@ -31,6 +31,10 @@ const makeConIndex = (d, icon_name) => {
     }
   });
   console.log(cnt);
+  return cnt;
+}
+
+const makeConIndex = (d, icon_name, cnt) => {
 
   const indexhtml = `<!DOCTYPE html>
   <html lang="en">
@@ -75,6 +79,54 @@ const makeConIndex = (d, icon_name) => {
   });
 }
 
+const makeConSite = (d, cnt) => {
+  const filePath = `./${d}`;
+  if(fs.existsSync(`${filePath}/images`) === false) {
+    fs.mkdirSync(`${filePath}/images`);
+  }
+  Array(cnt).fill().forEach((_, idx) => {
+    const url = `./${d}/image-${idx}.jpg`;
+    const tourl =`./${d}/images/image-${idx}-resize.jpg` ;
+
+    sharp(url)
+      .resize(800, 400, {
+        fit: 'contain',
+        background: {r:255, g:255, b:255}
+      })
+      .toFile(tourl, (err, info) => {console.log(err, info)});
+
+    const html = 
+  `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>-</title>
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="${tourl.replace(/^.*\/images/, 'images')}">
+</head>
+<body>
+  <script>
+    const l = location.protocol + "//" + location.host + location.pathname + "/..";
+    window.location.replace(l);
+  </script>
+</body>
+</html>
+  `;
+
+    //console.log(html);
+    const filename = `./${d}/idx-${idx}.html`;
+
+    fs.writeFile(filename, html, (err) => {
+        if (err) {
+          console.error(err);
+      } else {
+          console.log(`Text saved to ${filename}`);
+      }
+    });
+  });
+}
+
 const editMainIndex = (d, icon_name) => {
   const homePath = './index.html';
 
@@ -111,7 +163,9 @@ list
   .map((e, idx) => [idx + 1, e])
   .slice(start, end)
   .forEach(([d, icon_name]) => {
-    makeConIndex(d, icon_name);
+    const cnt = countItems(d);
+    makeConIndex(d, icon_name, cnt);
+    makeConSite(d, cnt);
     editMainIndex(d, icon_name);
   });
 

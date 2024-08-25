@@ -24,19 +24,25 @@ Array(cnt).fill().forEach((_, idx) => {
   const div = document.createElement('div');
   div.style = `background: url("image-${idx}.jpg") no-repeat center; background-size: cover`;
   div.setAttribute('data-link', `${location.protocol}//${location.host}${location.pathname}image-${idx}.jpg`);
+  div.setAttribute('data-site', `${location.protocol}//${location.host}${location.pathname}idx-${idx}`);
   div.addEventListener('click', (e) => {
     const t = e.target;
     const l = t.getAttribute('data-link');
+    const s = t.getAttribute('data-site');
     setCanvasImage(l)
       .then((blob) => {
         const clipboardItems = [
           new ClipboardItem( {
             "image/png":blob
+          }),
+          new ClipboardItem({
+            "text/plain": new Blob([s], { type: "text/plain" })
           })
         ];
         navigator.clipboard.write(clipboardItems)
           .then(() => console.log('copy success'))
           .catch(err => {
+              //navigator.clipboard.writeText(s)
               console.log (err);
               let alert = document.getElementById('alert');
               if (!alert) {
