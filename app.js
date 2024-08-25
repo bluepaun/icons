@@ -29,6 +29,7 @@ Array(cnt).fill().forEach((_, idx) => {
     const t = e.target;
     const l = t.getAttribute('data-link');
     const s = t.getAttribute('data-site');
+    navigator.clipboard.writeText(s);
     setCanvasImage(l)
       .then((blob) => {
         const clipboardItems = [
@@ -39,7 +40,6 @@ Array(cnt).fill().forEach((_, idx) => {
         navigator.clipboard.write(clipboardItems)
           .then(() => console.log('copy success'))
           .catch(err => {
-              navigator.clipboard.writeText(s)
               console.log (err);
               let alert = document.getElementById('alert');
               if (!alert) {
