@@ -34,7 +34,15 @@ Array(cnt).fill().forEach((_, idx) => {
         ];
         navigator.clipboard.write(clipboardItems)
           .then(() => console.log('copy success'))
-          .catch((err) => console.log('copy failed', err));
+          .catch(err => {
+              if (err.name === 'NotAllowedError') {
+                // Permission denied
+                alert('Permission denied. Please allow access to the clipboard.');
+              } else if (err.name === 'NotSupportedError') {
+                // Clipboard API not supported
+                alert('Clipboard API is not supported by your browser.');
+              }
+            });
       });
   })
   main.appendChild(div);
