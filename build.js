@@ -38,7 +38,7 @@ const makeConIndex = (d, icon_name) => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="images/image-0-resize.jpg">
+    <meta property="og:image" content="image-0.jpg">
     <title>${icon_name}</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../style-con.css">
