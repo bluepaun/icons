@@ -17,6 +17,33 @@ async function setCanvasImage(path) {
     img.src = path;
   });
 }
+
+const getAlertElement = () => {
+  let alert = document.getElementById('alert');
+  if (alert) {
+    return alert;
+  }
+
+  alert = document.createElement('div');
+  alert.id = 'alert';
+
+  const span = document.createElement('span');
+  alert.appendChild(span);
+
+  const close = document.createElement('button');
+  close.addEventListener('click', (e) => {
+    const t = e.target;
+    const p = document.getElementById('alert');
+    body.removeChild(p);
+  });
+  close.innerText = 'close';
+  alert.appendChild(close);
+  
+  body.appendChild(alert);
+  
+  return alert;
+}
+
 const cnt = await fetch(`${location.protocol}//${location.host}${location.pathname}cnt.json`).then((res) => res.json());
 
 const main = document.getElementsByTagName('main')[0];
@@ -29,52 +56,36 @@ Array(cnt).fill().forEach((_, idx) => {
     const t = e.target;
     const l = t.getAttribute('data-link');
     const s = t.getAttribute('data-site');
-    navigator.clipboard.writeText(s);
-    setCanvasImage(l)
+    navigator
+      .clipboard
+      .writeText(s)
+      .then(() => setCanvasImage(l))
       .then((blob) => {
         const clipboardItems = [
           new ClipboardItem( {
             "image/png":blob
           })
         ];
-        navigator.clipboard.write(clipboardItems)
-          .then(() => console.log('copy success'))
-          .catch(err => {
-              console.log (err);
-              let alert = document.getElementById('alert');
-              if (!alert) {
-                alert = document.createElement('div');
-                alert.id = 'alert';
+        return navigator.clipboard.write(clipboardItems);
+      })
+      .then(() => console.log('copy success'))
+      .catch(err => {
+        console.log (err);
+        const alert = getAlertElement();
 
-                const span = document.createElement('span');
-                alert.appendChild(span);
-
-                const close = document.createElement('button');
-                close.addEventListener('click', (e) => {
-                  const t = e.target;
-                  const p = document.getElementById('alert');
-                  body.removeChild(p);
-                });
-                close.innerText = 'close';
-                alert.appendChild(close);
-                
-                body.appendChild(alert);
-              }
-
-              const span = alert.getElementsByTagName('span')[0];
-              if (err.name === 'NotAllowedError') {
-                // Permission denied
-                //alert('Permission denied. Please allow access to the clipboard.');
-                span.innerText = 'Permission denied. Please allow access to the clipboard.';
-              } else if (err.name === 'NotSupportedError') {
-                // Clipboard API not supported
-                //alert('Clipboard API is not supported by your browser.');
-                span.innerText = 'Clipboard API is not supported by your browser.';
-              } else {
-                span.innerText = 'Unknown err occured.';
-              }
-            });
+        const span = alert.getElementsByTagName('span')[0];
+        if (err.name === 'NotAllowedError') {
+          // Permission denied
+          //alert('Permission denied. Please allow access to the clipboard.');
+          span.innerText = 'Permission denied. Please allow access to the clipboard.';
+        } else if (err.name === 'NotSupportedError') {
+          // Clipboard API not supported
+          //alert('Clipboard API is not supported by your browser.');
+          span.innerText = 'Clipboard API is not supported by your browser.';
+        } else {
+          span.innerText = 'Unknown err occured.';
+        }
       });
-  })
+  });
   main.appendChild(div);
 });

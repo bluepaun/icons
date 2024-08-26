@@ -19,7 +19,8 @@ const list = [
   '혁명콘',
 ];
 const start = 0;
-const end = list.length;
+//const end = list.length;
+const end = 1;
 
 const countItems = (d) => {
   const filePath = `./${d}`;
