@@ -17,26 +17,26 @@ const list = [
   '랄로콘',
   '서양잼민이콘',
   '혁명콘',
+  '둘리콘',
 ];
-const start = 0;
+const start = list.length - 1;
 //const end = list.length;
-const end = 1;
+const end = list.length;
 
 const countItems = (d) => {
   const filePath = `./${d}`;
   let cnt = 0;
-  fs.readdirSync(filePath).forEach(file => {
+  fs.readdirSync(filePath).forEach((file) => {
     console.log(file);
-    if(file.includes('.jpg')) {
+    if (file.includes('.jpg')) {
       cnt++;
     }
   });
   console.log(cnt);
   return cnt;
-}
+};
 
 const makeConIndex = (d, icon_name, cnt) => {
-
   const indexhtml = `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -58,46 +58,49 @@ const makeConIndex = (d, icon_name, cnt) => {
     </main>
   </body>
   </html>
-  `
+  `;
 
   const filename = `./${d}/index.html`;
 
   fs.writeFileSync(filename, indexhtml, (err) => {
-      if (err) {
-          console.error(err);
-      } else {
-          console.log(`Text saved to ${filename}`);
-      }
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`Text saved to ${filename}`);
+    }
   });
 
   const cntFilename = `./${d}/cnt.json`;
-  fs.writeFileSync(cntFilename, ''+cnt, (err) => {
-      if (err) {
-          console.error(err);
-      } else {
-          console.log(`Text saved to ${filename}`);
-      }
+  fs.writeFileSync(cntFilename, '' + cnt, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`Text saved to ${filename}`);
+    }
   });
-}
+};
 
 const makeConSite = (d, cnt) => {
   const filePath = `./${d}`;
-  if(fs.existsSync(`${filePath}/images`) === false) {
+  if (fs.existsSync(`${filePath}/images`) === false) {
     fs.mkdirSync(`${filePath}/images`);
   }
-  Array(cnt).fill().forEach((_, idx) => {
-    const url = `./${d}/image-${idx}.jpg`;
-    const tourl =`./${d}/images/image-${idx}-resize.jpg` ;
+  Array(cnt)
+    .fill()
+    .forEach((_, idx) => {
+      const url = `./${d}/image-${idx}.jpg`;
+      const tourl = `./${d}/images/image-${idx}-resize.jpg`;
 
-    sharp(url)
-      .resize(800, 400, {
-        fit: 'contain',
-        background: {r:255, g:255, b:255}
-      })
-      .toFile(tourl, (err, info) => {console.log(err, info)});
+      sharp(url)
+        .resize(800, 400, {
+          fit: 'contain',
+          background: { r: 255, g: 255, b: 255 },
+        })
+        .toFile(tourl, (err, info) => {
+          console.log(err, info);
+        });
 
-    const html = 
-  `<!DOCTYPE html>
+      const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -115,18 +118,18 @@ const makeConSite = (d, cnt) => {
 </html>
   `;
 
-    //console.log(html);
-    const filename = `./${d}/idx-${idx}.html`;
+      //console.log(html);
+      const filename = `./${d}/idx-${idx}.html`;
 
-    fs.writeFile(filename, html, (err) => {
+      fs.writeFile(filename, html, (err) => {
         if (err) {
           console.error(err);
-      } else {
+        } else {
           console.log(`Text saved to ${filename}`);
-      }
+        }
+      });
     });
-  });
-}
+};
 
 const editMainIndex = (d, icon_name) => {
   const homePath = './index.html';
@@ -135,30 +138,36 @@ const editMainIndex = (d, icon_name) => {
   if (data.match(new RegExp(`"${d}"`))) {
     return;
   }
-  
-  data = data.replace(/ +\<\/style\>/,`   a[href="${d}"] {
+
+  data = data.replace(
+    / +\<\/style\>/,
+    `   a[href="${d}"] {
       background: url("${d}/image-0.jpg") no-repeat center;
       background-size: cover;
     }
-  </style>`);
+  </style>`
+  );
 
-  data = data.replace(/ +\<\/main\>/, `    <div>
+  data = data.replace(
+    / +\<\/main\>/,
+    `    <div>
       <a href="${d}"></a>
       <h5>${icon_name}</h5>
     </div>
   </main>
-`);
+`
+  );
 
   //console.log(data);
-  
+
   fs.writeFileSync(homePath, data, (err) => {
     if (err) {
-        console.error(err);
+      console.error(err);
     } else {
-        console.log(`Text saved to ${homePath}`);
+      console.log(`Text saved to ${homePath}`);
     }
   });
-}
+};
 
 list
   .map((e, idx) => [idx + 1, e])
@@ -169,6 +178,5 @@ list
     makeConSite(d, cnt);
     editMainIndex(d, icon_name);
   });
-
 
 console.log('build end');
