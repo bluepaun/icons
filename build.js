@@ -19,9 +19,9 @@ const list = [
   '혁명콘',
   '둘리콘',
 ];
-const start = list.length - 1;
+const start = 7;
 //const end = list.length;
-const end = list.length;
+const end = 8;
 
 const countItems = (d) => {
   const filePath = `./${d}`;
