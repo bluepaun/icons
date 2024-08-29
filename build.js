@@ -18,10 +18,13 @@ const list = [
   '서양잼민이콘',
   '혁명콘',
   '둘리콘',
+  '홀로콘',
+  '홀로콘2',
+  '홀로카운슬콘',
 ];
-const start = 7;
+const start = list.length - 3;
 //const end = list.length;
-const end = 8;
+const end = list.length;
 
 const countItems = (d) => {
   const filePath = `./${d}`;

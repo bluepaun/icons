@@ -5,7 +5,7 @@ from os import listdir, remove
 from os.path import isfile, join
 
 def icons():
-  url = "https://www.dogdrip.net/sticker?sort_index=popular_week&sticker_srl=310206342"
+  url = "https://www.dogdrip.net/sticker?_filter=search&search_keyword=%ED%99%80%EB%A1%9C&search_target=title&sticker_srl=393380855"
   print(f"Scrapping... : {url}")
   res = requests.get(url,
                     headers={
@@ -37,7 +37,7 @@ def icons():
   for idx, new_url in enumerate(new_urls):
     response = requests.get(new_url)
     if response.status_code == 200:
-        with open(f'image-{idx + 27}.jpg', 'wb') as f:
+        with open(f'image-{idx + 0}.jpg', 'wb') as f:
             f.write(response.content)
         print("Image saved successfully")
     else:
